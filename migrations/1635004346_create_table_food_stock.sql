@@ -4,7 +4,7 @@
 CREATE TABLE `frozen_food_stock` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(100) NOT NULL,
-  `count` INT NOT NULL,
+  `quantity` INT NOT NULL,
   PRIMARY KEY (`id`));
 
 -- +migrate Down

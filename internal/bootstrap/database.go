@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 
+	"github.com/cikupin/kcd2021_helmfile/internal/model"
 	"github.com/go-gorp/gorp/v3"
 	_ "github.com/go-sql-driver/mysql" // defines that I use mysql driver
 )
@@ -29,6 +30,11 @@ func NewMysqlDatabase(option DBOption) (*gorp.DbMap, error) {
 		return nil, err
 	}
 
-	gorp := &gorp.DbMap{Db: db, Dialect: gorp.MySQLDialect{}}
+	gorp := &gorp.DbMap{
+		Db:      db,
+		Dialect: gorp.MySQLDialect{},
+	}
+	gorp.AddTableWithName(model.FrozenFood{}, "frozen_food_stock").SetKeys(true, "ID")
+
 	return gorp, nil
 }

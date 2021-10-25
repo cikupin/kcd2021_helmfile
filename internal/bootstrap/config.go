@@ -9,8 +9,10 @@ import (
 
 // ConfigObjects defines object for configuration items
 type ConfigObjects struct {
-	AppOptions AppOptions
-	DBOptions  DBOption
+	AppOptions   AppOptions
+	DBOptions    DBOption
+	CacheOptions CacheOption
+	CacheKeys    CacheKey
 }
 
 type AppOptions struct {

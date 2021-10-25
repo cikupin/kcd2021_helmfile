@@ -1,7 +1,7 @@
 -- +migrate Up
 -- SQL in section 'Up' is executed when this migration is applied
 
-INSERT INTO `frozen_food_stock` (`name`, `count`) VALUES
+INSERT INTO `frozen_food_stock` (`name`, `quantity`) VALUES
     ('Frozen bananas', '132'),
     ('Frozen pineapple', '56'),
     ('Frozen strawberries', '80'),
