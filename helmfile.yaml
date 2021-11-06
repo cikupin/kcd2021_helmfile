@@ -17,3 +17,31 @@ releases:
     version: 8.8.12
     values:
       - .infra/helmfiles/{{ requiredEnv "ENV" }}/mysql.yaml
+    wait: true
+
+  - name: kcd-config
+    namespace: kcd-{{ requiredEnv "ENV" }}
+    chart: .infra/charts/api  # this is using chart from local directory
+    values:
+      - .infra/helmfiles/{{ requiredEnv "ENV" }}/config.yaml
+
+  - name: kcd-migration
+    namespace: kcd-{{ requiredEnv "ENV" }}
+    chart: .infra/charts/api  # this is using chart from local directory
+    values:
+      - .infra/helmfiles/{{ requiredEnv "ENV" }}/migration.yaml
+    needs:
+      - kcd-{{ requiredEnv "ENV" }}/redis
+      - kcd-{{ requiredEnv "ENV" }}/mysql
+      - kcd-{{ requiredEnv "ENV" }}/kcd-config
+
+  - name: kcd-api-server
+    namespace: kcd-{{ requiredEnv "ENV" }}
+    chart: .infra/charts/api  # this is using chart from local directory
+    values:
+      - .infra/helmfiles/{{ requiredEnv "ENV" }}/api-server.yaml
+    needs:
+      - kcd-{{ requiredEnv "ENV" }}/redis
+      - kcd-{{ requiredEnv "ENV" }}/mysql
+      - kcd-{{ requiredEnv "ENV" }}/kcd-config
+      - kcd-{{ requiredEnv "ENV" }}/kcd-migration

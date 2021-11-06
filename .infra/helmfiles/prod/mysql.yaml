@@ -2,7 +2,7 @@ architecture: standalone
 
 auth:
   rootPassword: "xE5uTKGWfbTE3NUh"
-  database: "kcd_db"
+  database: "db_food"
 
 primary:
   persistence:

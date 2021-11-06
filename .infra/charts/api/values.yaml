@@ -1,0 +1,70 @@
+configmap:
+  enabled: false
+  data: {}
+
+secret:
+  enabled: false
+  type: Opaque
+  data: {}
+
+migration:
+  enabled: false
+  labels: {}
+
+  image:
+    repo: cikupin/kcd2021-helmfile
+    tag: latest
+    pullPolicy: IfNotPresent
+
+  configMap:
+    envFrom: []
+
+  secret:
+    envFrom: []
+
+  command: []
+  args: []
+
+  restartPolicy: Never
+
+server:
+  enabled: false
+  replicaCount: 1
+
+  image:
+    repo: cikupin/kcd2021-helmfile
+    tag: latest
+    pullPolicy: IfNotPresent
+
+  configMap:
+    envFrom: []
+
+  secret:
+    envFrom: []
+
+  command: []
+  args: []
+
+  port: 8080
+  restartPolicy: Always
+
+  liveness:
+    initialDelaySeconds: 5
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
+    successThreshold: 1
+
+  readiness:
+    path: /health-check
+    initialDelaySeconds: 5
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
+    successThreshold: 1
+
+  service:
+    type: ClusterIP # ClusterIP or NodePort
+    port: 80
+    nodePort: 30007
+

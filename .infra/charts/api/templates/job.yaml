@@ -1,0 +1,47 @@
+{{- if .Values.migration.enabled -}}
+{{- $fullname := include "api.fullname" . -}}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ printf "%s-%d" $fullname .Release.Revision }}
+  {{- with .Values.migration.labels }}
+  labels:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  template:
+    metadata:
+      name: {{ $fullname }}
+    spec:
+      containers:
+      - name: {{ $fullname }}
+        image: {{ printf "%s:%s" .Values.migration.image.repo .Values.migration.image.tag }}
+        {{- with .Values.migration.command }}
+        command:
+          {{- range . }}
+          - {{ . | quote }}
+          {{- end }}
+        {{- end }}
+        {{- with .Values.migration.args }}
+        args:
+          {{- range . }}
+          - {{ . | quote }}
+          {{- end }}
+        {{- end }}
+        {{- if or .Values.migration.secret.envFrom .Values.migration.configMap.envFrom }}
+        envFrom:
+        {{- with .Values.migration.secret.envFrom }}
+        {{- range . }}
+          - secretRef:
+              name: {{ . }}
+        {{- end }}
+        {{- end }}
+        {{- with .Values.migration.configMap.envFrom }}
+        {{- range . }}
+          - configMapRef:
+              name: {{ . }}
+        {{- end }}
+        {{- end }}
+        {{- end }}
+      restartPolicy: Never
+{{- end }}

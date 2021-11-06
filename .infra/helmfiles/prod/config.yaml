@@ -1,0 +1,25 @@
+configmap:
+  enabled: true
+  data:
+    APP_PORT: "8080"
+    DB_HOST: "mysql.mysql-prod"
+    DB_PORT: "3306"
+    DB_NAME: "db_food"
+    DB_ADDITIONAL_PARAMS: "charset=utf8&parseTime=True&loc=Asia%2fJakarta&time_zone=%27%2B07%3A00%27"
+    CACHE_IS_ENABLED: "true"
+    CACHE_HOST: "redis-master.redis-prod"
+    CACHE_PORT: "6379"
+    CACHE_NAMESPACE: "0"
+    CACHE_CONNECTION_MAX_LIFETIME: "5m"
+    CACHE_MAX_IDLE_CONNECTION: "5"
+    CACHE_MAX_ACTIVE_CONNECTION: "100"
+    CACHE_KEY_FROZEN_FOOD: "frozen_food"
+    CACHE_TTL_FROZEN_FOOD: "5m"
+
+
+secret:
+  enabled: true
+  data:
+    DB_USERNAME: "root"
+    DB_PASSWORD: "xE5uTKGWfbTE3NUh"
+    CACHE_PASSWORD: "Ej6q8ewMqCDeh3yj"

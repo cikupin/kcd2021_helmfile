@@ -1,0 +1,16 @@
+configmap:
+  enabled: true
+  data:
+    APP_PORT: "8080"
+    DB_HOST: "mysql.mysql-stg"
+    DB_PORT: "3306"
+    DB_NAME: "db_food"
+    DB_ADDITIONAL_PARAMS: "charset=utf8&parseTime=True&loc=Asia%2fJakarta&time_zone=%27%2B07%3A00%27"
+    CACHE_IS_ENABLED: "false"
+
+
+secret:
+  enabled: true
+  data:
+    DB_USERNAME: "root"
+    DB_PASSWORD: "3fZ7ET29gahTj5Dp"

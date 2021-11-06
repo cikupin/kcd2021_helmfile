@@ -1,0 +1,16 @@
+migration:
+  enabled: true
+
+  labels:
+    version: "1"
+
+  configMap:
+    envFrom:
+      - kcd-config
+
+  secret:
+    envFrom:
+      - kcd-config
+
+  args:
+    - migration-up

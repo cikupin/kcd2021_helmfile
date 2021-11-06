@@ -2,6 +2,9 @@ FROM alpine:3.10.1
 
 ENV PATH=$PATH:/opt/kcd2021-helmfile
 
+RUN apk update
+RUN apk add --no-cache tzdata
+
 WORKDIR /opt/kcd2021-helmfile
 
 COPY ./migrations /opt/kcd2021-helmfile/migrations/

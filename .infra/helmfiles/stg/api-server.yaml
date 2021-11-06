@@ -1,0 +1,16 @@
+server:
+  enabled: true
+
+  configMap:
+    envFrom:
+      - kcd-config
+
+  secret:
+    envFrom:
+      - kcd-config
+
+  args:
+    - api
+
+  readiness:
+    path: /health

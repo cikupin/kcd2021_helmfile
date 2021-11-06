@@ -1,0 +1,74 @@
+{{- if .Values.server.enabled -}}
+{{- $fullname := include "api.fullname" . -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "api.fullname" . }}
+  annotations:
+    reloader.stakater.com/auto: "true"
+  labels:
+    {{- include "api.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.server.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "api.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "api.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ $fullname }}
+          image: "{{ .Values.server.image.repo }}:{{ .Values.server.image.tag }}"
+          imagePullPolicy: {{ .Values.server.image.pullPolicy }}
+          {{- with .Values.server.command }}
+          command:
+            {{- range . }}
+            - {{ . | quote }}
+            {{- end }}
+          {{- end }}
+          {{- with .Values.server.args }}
+          args:
+            {{- range . }}
+            - {{ . | quote }}
+            {{- end }}
+          {{- end }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.server.port }}
+              protocol: TCP
+          livenessProbe:
+            tcpSocket:
+              port: {{ .Values.server.port }}
+            initialDelaySeconds: {{ .Values.server.liveness.initialDelaySeconds }}
+            periodSeconds: {{ .Values.server.liveness.periodSeconds }}
+            timeoutSeconds: {{ .Values.server.liveness.timeoutSeconds }}
+            failureThreshold: {{ .Values.server.liveness.failureThreshold }}
+            successThreshold: {{ .Values.server.readiness.successThreshold }}
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.server.readiness.path }}
+              port: {{ .Values.server.port }}
+            initialDelaySeconds: {{ .Values.server.readiness.initialDelaySeconds }}
+            periodSeconds: {{ .Values.server.readiness.periodSeconds }}
+            timeoutSeconds: {{ .Values.server.readiness.timeoutSeconds }}
+            failureThreshold: {{ .Values.server.readiness.failureThreshold }}
+            successThreshold: {{ .Values.server.readiness.successThreshold }}
+          {{- if or .Values.server.configMap.envFrom .Values.server.secret.envFrom }}
+          envFrom:
+          {{- with .Values.server.configMap.envFrom }}
+            {{- range . }}
+            - configMapRef:
+                name: {{ . }}
+            {{- end }}
+          {{- end }}
+          {{- with .Values.server.secret.envFrom }}
+            {{- range . }}
+            - secretRef:
+                name: {{ . }}
+            {{- end }}
+          {{- end }}
+          {{- end }}
+      restartPolicy: {{ .Values.server.restartPolicy }}
+{{- end }}
