@@ -2,4 +2,3 @@ architecture: standalone
 
 auth:
   enabled: true
-  password: "Ej6q8ewMqCDeh3yj"

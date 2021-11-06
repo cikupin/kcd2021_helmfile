@@ -15,11 +15,3 @@ configmap:
     CACHE_MAX_ACTIVE_CONNECTION: "100"
     CACHE_KEY_FROZEN_FOOD: "frozen_food"
     CACHE_TTL_FROZEN_FOOD: "5m"
-
-
-secret:
-  enabled: true
-  data:
-    DB_USERNAME: "root"
-    DB_PASSWORD: "xE5uTKGWfbTE3NUh"
-    CACHE_PASSWORD: "Ej6q8ewMqCDeh3yj"

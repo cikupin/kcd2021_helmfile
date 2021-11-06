@@ -9,6 +9,8 @@ releases:
     version: 15.5.4
     values:
       - .infra/helmfiles/{{ requiredEnv "ENV" }}/redis.yaml
+    secrets:
+      - .infra/helmfiles/{{ requiredEnv "ENV" }}/redis-secret.yaml
     installed: {{ requiredEnv "ENV" | eq "prod" }}
 
   - name: mysql
@@ -17,6 +19,8 @@ releases:
     version: 8.8.12
     values:
       - .infra/helmfiles/{{ requiredEnv "ENV" }}/mysql.yaml
+    secrets:
+      - .infra/helmfiles/{{ requiredEnv "ENV" }}/mysql-secret.yaml
     wait: true
 
   - name: kcd-config
@@ -24,6 +28,8 @@ releases:
     chart: .infra/charts/api  # this is using chart from local directory
     values:
       - .infra/helmfiles/{{ requiredEnv "ENV" }}/config.yaml
+    secrets:
+      - .infra/helmfiles/{{ requiredEnv "ENV" }}/secret.yaml
 
   - name: kcd-migration
     namespace: kcd-{{ requiredEnv "ENV" }}

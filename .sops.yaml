@@ -1,0 +1,6 @@
+creation_rules:
+  - path_regex: .infra/helmfiles/stg/*
+    hc_vault_transit_uri: "http://localhost:8200/v1/sops/keys/stg"
+
+  - path_regex: .infra/helmfiles/prod/*
+    hc_vault_transit_uri: "http://localhost:8200/v1/sops/keys/prod"

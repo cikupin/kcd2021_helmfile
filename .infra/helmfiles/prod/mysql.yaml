@@ -1,7 +1,6 @@
 architecture: standalone
 
 auth:
-  rootPassword: "xE5uTKGWfbTE3NUh"
   database: "db_food"
 
 primary:
