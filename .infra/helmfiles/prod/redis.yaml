@@ -2,3 +2,7 @@ architecture: standalone
 
 auth:
   enabled: true
+
+master:
+  persistence:
+    enabled: false
