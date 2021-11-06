@@ -35,3 +35,10 @@ package: build
 push: package
 	@echo "Pushing Docker image ${APP_NAME} to registry"
 	docker push ${DOCKER_REGISTRY}/${APP_NAME}:latest
+
+.PHONY: run-vault
+run-vault:
+	@echo "Running vault"
+	export VAULT_ADDR=http://127.0.0.1:8200
+	export VAULT_TOKEN=toor
+	docker run --cap-add=IPC_LOCK -d --name=dev-vault -p8200:8200 vault:1.8.4 server -dev -dev-root-token-id=toor
