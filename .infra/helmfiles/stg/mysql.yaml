@@ -1,0 +1,9 @@
+architecture: standalone
+
+auth:
+  rootPassword: "3fZ7ET29gahTj5Dp"
+  database: "kcd_db"
+
+primary:
+  persistence:
+    enabled: false
